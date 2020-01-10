@@ -4,10 +4,14 @@ import Table from 'react-bootstrap/Table';
 class NearEarthObject extends Component {
     constructor(props){
         super(props);
+        console.log("constructor")
+        console.log(props);
     }
     
     render() { 
         const { details } = this.props;
+        if(!details)
+            return "No data for closest object";
         return ( 
             <Table size="sm">
                 <tbody>

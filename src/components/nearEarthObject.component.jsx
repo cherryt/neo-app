@@ -2,16 +2,10 @@ import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 
 class NearEarthObject extends Component {
-    constructor(props){
-        super(props);
-        console.log("constructor")
-        console.log(props);
-    }
     
     render() { 
         const { details } = this.props;
-        if(!details)
-            return "No data for closest object";
+        if(!details) return "No Closest Object data";
         return ( 
             <Table size="sm">
                 <tbody>
@@ -21,7 +15,7 @@ class NearEarthObject extends Component {
                     </tr>
                     <tr>
                         <td>Miss Distance</td>
-                        <td>{details.distance}</td>
+                        <td>{details.lunar_distance}</td>
                     </tr>
                     <tr>
                         <td>Time</td>

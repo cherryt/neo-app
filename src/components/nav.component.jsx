@@ -15,9 +15,6 @@ class Nav extends Component {
             size: 4
         }
     }  
-    constructor(){
-        super();
-    }
 
 handleObjectDetails=(neos)=>{
     var newObjectModels = [];
@@ -32,62 +29,75 @@ handleObjectDetails=(neos)=>{
     return newObjectModels;
 }
 
-handleClosestObject=(newNeos)=>{
+handleClosestObject=(neos)=>{
     const reducer = (minItem, currentItem) => {
-        if(minItem == null || currentItem["lunar_distance"] < currentItem["lunar_distance"]) {
+        if(!!minItem || currentItem["lunar_distance"] < minItem["lunar_distance"]) {
             minItem = currentItem
         }
         return minItem;
     }
-    return newNeos.reduce(reducer);
+    return neos.reduce(reducer);
+}
+
+handlePHA=(neos)=>{
+    return neos.filter(n => n.pha === true);
 }
 
 componentDidMount(){
-    console.log(this.state.date);
     //api call
     axios.get(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${this.state.date}&end_date=${this.state.date}&api_key=${process.env.REACT_APP_NEO_API_KEY}`)
     .then((res) => {
-        this.state.neos = res["data"]["near_earth_objects"][this.state.date];
-        this.state.neoModels = this.handleObjectDetails(this.state.neos);
+        var neos = res["data"]["near_earth_objects"][this.state.date];
+        this.setState({neos: this.handleObjectDetails(neos)});
 
         //closest
-        var closestObject = this.handleClosestObject(this.state.neoModels);
+        var closestObject = this.handleClosestObject(this.state.neos);
        this.setState({closestObject: closestObject});
-       console.log(this.state.closestObject)
     }).catch((err) => {
         console.log(err);
     });
 }
 
 render(){
-    console.log(this.state.closestObject);
     return (
-        
-<Accordion defaultActiveKey="0">
-  <Card>
-    <Card.Header>
-      <Accordion.Toggle as={Button} variant="link" eventKey="0">
-        Closest Object
-      </Accordion.Toggle>
-    </Card.Header>
-    <Accordion.Collapse eventKey="0">
-        <Card.Body>
-            <NearEarthObject details={this.state.closestObject}></NearEarthObject>
-        </Card.Body>
-    </Accordion.Collapse>   
-
-  </Card>
-  {/* <Card>
-    <Card.Header>
-      <Accordion.Toggle as={Button} variant="link" eventKey="1">
-        All of Today's NEO
-      </Accordion.Toggle>
-    </Card.Header>
-    <Accordion.Collapse eventKey="1">
-      <Card.Body><NearEarthObjects neos={neos}></NearEarthObjects></Card.Body>
-    </Accordion.Collapse>
-  </Card> */}
-</Accordion>
+        <Accordion defaultActiveKey="0">
+            <Card>
+                <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                    Closest Object
+                </Accordion.Toggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                        <NearEarthObject details={this.state.closestObject}></NearEarthObject>
+                    </Card.Body>
+                </Accordion.Collapse>   
+            </Card>
+            <Card>
+                <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                    Potentially Hazardous Asteroids
+                </Accordion.Toggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="1">
+                    <Card.Body>
+                        <NearEarthObjects details={() => this.handlePHA(this.state.neos)}></NearEarthObjects>
+                    </Card.Body>
+                </Accordion.Collapse>   
+            </Card>
+            <Card>
+                <Card.Header>
+                    <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                        All of Today's NEO
+                    </Accordion.Toggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="2">
+                    <Card.Body>
+                        <NearEarthObjects neos={this.state.neos}></NearEarthObjects>
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        </Accordion>
     )
 }
 }

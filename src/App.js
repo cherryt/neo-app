@@ -1,12 +1,12 @@
-import React from 'react';
-import Nav from './components/nav.component';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import Nav from "./components/nav.component";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <React.Fragment>
-      <Nav/>
+      <Nav />
     </React.Fragment>
   );
 }

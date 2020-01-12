@@ -3,6 +3,7 @@ import { Accordion, Card, Button } from "react-bootstrap";
 import NearEarthObject from "./nearEarthObject.component";
 import NearEarthObjects from "./nearEarthObjects.component";
 import axios from "axios";
+import "../App.css";
 
 class Nav extends Component {
   getDate = () => {
@@ -70,18 +71,11 @@ class Nav extends Component {
 
   handleNextNeo = neos => {
     const reducer = (nextTimeAcc, currentItem) => {
-      console.log(nextTimeAcc);
       var today = new Date();
       if (!currentItem["dateTime"]) return nextTimeAcc;
       const timeDiff = Date.parse(currentItem["dateTime"]) - today.getTime();
-      console.log(timeDiff);
-      console.log(
-        currentItem["dateTime"] + " " + Date.parse(currentItem["dateTime"])
-      );
       if (timeDiff < 0) return nextTimeAcc;
       if (!nextTimeAcc || timeDiff < nextTimeAcc.timeDiff) {
-        console.log(nextTimeAcc);
-        console.log({ nextNeo: currentItem, timeDiff: timeDiff });
         return { nextNeo: currentItem, timeDiff: timeDiff };
       }
       return nextTimeAcc;
@@ -111,14 +105,19 @@ class Nav extends Component {
 
   render() {
     return (
-      <Accordion defaultActiveKey="0">
+      <Accordion>
         <Card>
           <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+            <Accordion.Toggle
+              className="panel panel-title"
+              as={Button}
+              variant="info"
+              eventKey="0"
+            >
               Closest Object
             </Accordion.Toggle>
           </Card.Header>
-          <Accordion.Collapse eventKey="0">
+          <Accordion.Collapse className="panel panel-body" eventKey="0">
             <Card.Body>
               <NearEarthObject
                 details={this.state.closestObject}
@@ -128,11 +127,16 @@ class Nav extends Component {
         </Card>
         <Card>
           <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="1">
+            <Accordion.Toggle
+              className="panel panel-title"
+              as={Button}
+              variant="info"
+              eventKey="1"
+            >
               Potentially Hazardous Asteroids
             </Accordion.Toggle>
           </Card.Header>
-          <Accordion.Collapse eventKey="1">
+          <Accordion.Collapse className="panel panel-body" eventKey="1">
             <Card.Body>
               <NearEarthObjects
                 details={this.state.todaysPHA}
@@ -142,11 +146,16 @@ class Nav extends Component {
         </Card>
         <Card>
           <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="2">
+            <Accordion.Toggle
+              className="panel panel-title"
+              as={Button}
+              variant="info"
+              eventKey="2"
+            >
               Next NEO
             </Accordion.Toggle>
           </Card.Header>
-          <Accordion.Collapse eventKey="2">
+          <Accordion.Collapse className="panel panel-body" eventKey="2">
             <Card.Body>
               <NearEarthObject details={this.state.nextNeo}></NearEarthObject>
             </Card.Body>
@@ -154,11 +163,16 @@ class Nav extends Component {
         </Card>
         <Card>
           <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="3">
+            <Accordion.Toggle
+              className="panel panel-title"
+              as={Button}
+              variant="info"
+              eventKey="3"
+            >
               All of Today's NEO
             </Accordion.Toggle>
           </Card.Header>
-          <Accordion.Collapse eventKey="3">
+          <Accordion.Collapse className="panel panel-body" eventKey="3">
             <Card.Body>
               <NearEarthObjects neos={this.state.neos}></NearEarthObjects>
             </Card.Body>

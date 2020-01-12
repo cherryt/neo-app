@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+
+/* accordian */
+.accordion .panel {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0 0 0 50px;
+}
+.accordion .panel-title {
+  display: block;
+  padding: 10px 20px 10px 60px;
+  background: #fe5f55;
+  border-radius: 30px;
+  border: 2px solid #fe5f55;
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
+  position: relative;
+}
+
+.accordion .panel-body {
+  padding: 10px 15px 0;
+  margin: 0 0 0 30px;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  line-height: 28px;
+  position: relative;
+}

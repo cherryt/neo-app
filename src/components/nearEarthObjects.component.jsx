@@ -7,7 +7,7 @@ class NearEarthObjects extends Component {
     if (!neos || neos.length === 0) return "No data";
     return neos.map(n => {
       return (
-        <NearEarthObject details={n} key={n.lunar_distance}></NearEarthObject>
+        <NearEarthObject details={n} key={n.lunarDistance}></NearEarthObject>
       );
     });
   }

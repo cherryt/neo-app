@@ -1,12 +1,12 @@
 import React from "react";
-import Nav from "./components/nav.component";
+import TopNav from "./components/topNav.component";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <React.Fragment>
-      <Nav />
+      <TopNav></TopNav>
     </React.Fragment>
   );
 }
